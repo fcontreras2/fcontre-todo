@@ -1,0 +1,74 @@
+&__input {
+  position: relative;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  background: $color-primary;
+  border-bottom: 1px solid rgb(59, 66, 117);
+  color: $color-white;
+  outline: none;
+  padding: 16px 20px;
+
+  @include media(tablet) {
+    gap: 16px;
+    padding: 20px;
+  }
+
+  @include media(desktop) {
+    padding: 24px;
+  }
+
+  animation: fadeInAnimation ease 0.4s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+
+  input {
+    background: none;
+    font-size: 16px;
+
+    border: none;
+    outline: none;
+    color: $color-white;
+    font-family: $font;
+    width: 95%;
+    @include media(tablet) {
+      font-size: 20px;
+      line-height: 28px;
+    }
+  }
+
+  &::placeholder {
+    font-family: $font;
+  }
+
+  .delete {
+    opacity: 0;
+    transition: 0.2s linear;
+  }
+
+  &:hover {
+    .delete {
+      opacity: 1;
+    }
+  }
+
+  &.active::after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    left: 62px;
+    height: 2px;
+    background: $color-secondary;
+    animation-name: strike;
+    animation-duration: 0.2s;
+    animation-timing-function: linear;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+  }
+
+  &.active {
+    input {
+      text-decoration: line-through;
+    }
+  }
+}

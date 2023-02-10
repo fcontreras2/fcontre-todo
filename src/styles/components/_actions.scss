@@ -1,0 +1,37 @@
+&__actions {
+  background-color: #282a57;
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  div:first-child {
+    display: flex;
+    gap: 10px;
+    @include media(tablet){
+      gap: 24px;
+    }
+  }
+  button {
+    border: none;
+    background: none;
+    padding: 0;
+    font-size: 11px;
+
+    font-family: $font;
+    color: $color-white;
+    font-weight: 900;
+    cursor: pointer;
+    transition: color 0.2s ease-out;
+    &.active,
+    &:hover {
+      color: $color-secondary;
+    }
+
+    @include media(tablet){
+      font-size: 14px;
+    }
+  }
+
+  &:last-child {
+    justify-self: flex-end;
+  }
+}

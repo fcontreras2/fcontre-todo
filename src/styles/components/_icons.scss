@@ -1,0 +1,13 @@
+&__icon-inital {
+  color: rgb(103, 102, 107);
+}
+
+&__icon {
+  cursor: pointer;
+  transition: color 0.2s ease-out;
+
+  &:hover {
+    color: $color-secondary;
+  }
+}
+

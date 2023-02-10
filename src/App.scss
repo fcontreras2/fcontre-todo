@@ -1,0 +1,81 @@
+@import "./styles/variables";
+@import "./styles/media";
+
+.App {
+  padding-bottom: 60px;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(180deg, #000 0%, $color-white 100%);
+    background-image: linear-gradient(
+        100deg,
+        rgba(38, 60, 205, 0.716),
+        #c7289fa0
+      ),
+      url("https://images.unsplash.com/photo-1675365723622-4f502982f089?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1528&q=80");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: -1;
+
+    @include media(tablet) {
+      height: 250px;
+    }
+    @include media(desktop) {
+      height: 350px;
+    }
+  }
+}
+
+.todo {
+  margin: auto auto;
+  margin-top: 70px;
+  max-width: 90vw;
+
+  @include media(tablet) {
+    max-width: 748px;
+    padding: 0 20px;
+  }
+
+  @include media(desktop) {
+    max-width: 748px;
+    padding: 0 24px;
+    padding-top: 70px;
+  }
+  
+  &__title {
+    color: $color-white;
+    text-transform: uppercase;
+    font-weight: 900;
+    font-size: 20px;
+
+    @include media(tablet) {
+      font-size: 32px;
+    }
+  }
+  &__list {
+    display: flex;
+    flex-direction: column;
+    margin-top: 24px;
+    width: 100%;
+  }
+
+  &__empty {
+    padding: 24px;
+    background: $color-primary;
+    margin: 0;
+    color: $color-white;
+
+    @include media(tablet) {
+      font-size: 20px;
+    }
+  }
+
+  @import "./styles/components/task";
+  @import "./styles/components/actions";
+  @import "./styles/components/icons";
+}
