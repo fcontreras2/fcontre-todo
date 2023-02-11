@@ -3,19 +3,12 @@
   padding: 20px 24px;
   display: flex;
   justify-content: space-between;
-  div:first-child {
-    display: flex;
-    gap: 10px;
-    @include media(tablet){
-      gap: 24px;
-    }
-  }
+
   button {
     border: none;
     background: none;
     padding: 0;
     font-size: 11px;
-
     font-family: $font;
     color: $color-white;
     font-weight: 900;
@@ -26,12 +19,32 @@
       color: $color-secondary;
     }
 
-    @include media(tablet){
+    @include media(tablet) {
       font-size: 14px;
+    }
+    &:disabled {
+      cursor: not-allowed;
+      color: rgb(159, 158, 162);
+    }
+  }
+
+  &-counter {
+    display: none;
+    color: rgb(159, 158, 162);
+    @include media(tablet) {
+      display: block;
     }
   }
 
   &:last-child {
     justify-self: flex-end;
+  }
+
+  div:nth-child(2) {
+    display: flex;
+    gap: 10px;
+    @include media(tablet) {
+      gap: 24px;
+    }
   }
 }

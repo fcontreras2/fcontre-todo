@@ -1,4 +1,4 @@
-import { Task, TodoState } from "./index";
+import { Task, TaskStatus, TodoState } from "./index";
 
 type Action = {
   type: string;
@@ -10,7 +10,7 @@ const reducer = (state: TodoState, action: Action) => {
     case "ADD_TASK":
       return {
         ...state,
-        list: [...state.list, action.payload],
+        list: [action.payload, ...state.list],
       };
 
     case "UPDATE_TASK": {
@@ -31,22 +31,20 @@ const reducer = (state: TodoState, action: Action) => {
       };
     }
 
-    case "SET_DRAG_START_POSITION": { 
-
-      console.log("SET_DRAG_INIT_POSITION", action.payload)
+    case "SET_DRAG_START_POSITION": {
+      console.log("SET_DRAG_INIT_POSITION", action.payload);
       return {
         ...state,
-        dragStartPosition: action.payload
-      }
+        dragStartPosition: action.payload,
+      };
     }
 
-    case "SET_DRAG_END_POSITION": { 
-
-      console.log("SET_DRAG_END_POSITION", action.payload)
+    case "SET_DRAG_END_POSITION": {
+      console.log("SET_DRAG_END_POSITION", action.payload);
       return {
         ...state,
-        dragEndPosition: action.payload
-      }
+        dragEndPosition: action.payload,
+      };
     }
 
     case "DRAG_TASK": {
@@ -63,6 +61,20 @@ const reducer = (state: TodoState, action: Action) => {
         dragStartPosition: null,
         dragEndPosition: null,
       };
+    }
+
+    case "SET_FILTER": {
+      return {
+        ...state,
+        filter: action.payload,
+      };
+    }
+
+    case "CLEAR_COMPLETED": {
+      return {
+        ...state,
+        list: state.list.filter( task => task.status === TaskStatus.active)
+      }
     }
 
     default:

@@ -1,4 +1,4 @@
-import { DragEvent, memo, useContext, useRef, useState } from "react";
+import { DragEvent, memo, useContext,  useState } from "react";
 
 import { Task, TaskFilter, TaskStatus, TodoContext } from "../provider";
 import { ReactComponent as IconCheck } from "../icons/ic_check.svg";
@@ -37,7 +37,6 @@ export const InputTask = ({
   };
 
   const dragStart = (event: DragEvent<HTMLDivElement>) => {
-    const { currentTarget } = event;
     setIsDrag(true);
     dispatch({
       type: "SET_DRAG_START_POSITION",
@@ -46,16 +45,13 @@ export const InputTask = ({
   };
 
   const dragEnter = (event: DragEvent<HTMLDivElement>) => {
-    const { currentTarget } = event;
     dispatch({
       type: "SET_DRAG_END_POSITION",
       payload: index,
     });
-    console.log("Enter", index);
   };
 
   const drangEnd = (event: DragEvent<HTMLDivElement>) => {
-    const { currentTarget } = event;
     setIsDrag(false);
     dispatch({
       type: "DRAG_TASK",

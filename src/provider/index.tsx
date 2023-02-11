@@ -1,4 +1,5 @@
 import { createContext, useReducer } from "react";
+import useLocalStorage from "../hooks/useLocalStorage";
 import reducer from "./reducer";
 
 export enum TaskStatus {
@@ -45,7 +46,12 @@ type Props = {
 };
 
 const TodoProvider = ({ children }: Props) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const { getValue } = useLocalStorage("list");
+  console.log("value", getValue());
+  const [state, dispatch] = useReducer(reducer, {
+    ...initialState,
+    list: getValue() ?? [],
+  });
   return (
     <TodoContext.Provider value={{ dispatch, ...state }}>
       {children}
