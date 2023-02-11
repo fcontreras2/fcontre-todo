@@ -11,7 +11,10 @@ function App() {
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     const { currentTarget } = event;
-    if (event.key === "Enter") {
+    if (event.key === "Enter" && currentTarget.value !== "") {
+      event.preventDefault();
+      currentTarget.focus();
+
       dispatch({
         type: "ADD_TASK",
         payload: {

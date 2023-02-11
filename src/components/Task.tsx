@@ -1,16 +1,18 @@
-import { memo, useContext } from "react";
+import { DragEvent, memo, useContext, useRef, useState } from "react";
 
-import { Task, TaskStatus, TodoContext } from "../provider";
+import { Task, TaskFilter, TaskStatus, TodoContext } from "../provider";
 import { ReactComponent as IconCheck } from "../icons/ic_check.svg";
 import { ReactComponent as IconCircle } from "../icons/ic_circle.svg";
 import { ReactComponent as IconArchive } from "../icons/ic_archive.svg";
+import clsx from "clsx";
 
 export const InputTask = ({
   text,
   status,
   index,
 }: Task & { index: number }) => {
-  const { dispatch } = useContext(TodoContext);
+  const { dispatch, filter, dragEndPosition } = useContext(TodoContext);
+  const [isDrag, setIsDrag] = useState<boolean>(false);
 
   const updateState = (task: Task) => {
     dispatch({
@@ -34,8 +36,35 @@ export const InputTask = ({
     });
   };
 
+  const dragStart = (event: DragEvent<HTMLDivElement>) => {
+    const { currentTarget } = event;
+    setIsDrag(true);
+    dispatch({
+      type: "SET_DRAG_START_POSITION",
+      payload: index,
+    });
+  };
+
+  const dragEnter = (event: DragEvent<HTMLDivElement>) => {
+    const { currentTarget } = event;
+    dispatch({
+      type: "SET_DRAG_END_POSITION",
+      payload: index,
+    });
+    console.log("Enter", index);
+  };
+
+  const drangEnd = (event: DragEvent<HTMLDivElement>) => {
+    const { currentTarget } = event;
+    setIsDrag(false);
+    dispatch({
+      type: "DRAG_TASK",
+    });
+  };
+
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { currentTarget } = event;
+    event.stopPropagation();
     updateState({
       status,
       text: currentTarget.value,
@@ -44,9 +73,16 @@ export const InputTask = ({
 
   return (
     <div
-      className={`todo__input ${
-        status === TaskStatus.completed ? "active" : ""
-      }`}
+      className={clsx(
+        "todo__input",
+        status === TaskStatus.completed && "active",
+        isDrag && "drag",
+        dragEndPosition === index && "drag-end"
+      )}
+      draggable={filter === TaskFilter.all}
+      onDragStart={dragStart}
+      onDragEnter={dragEnter}
+      onDragEnd={drangEnd}
     >
       {status === TaskStatus.completed ? (
         <IconCheck
@@ -60,7 +96,7 @@ export const InputTask = ({
         />
       )}
       <input
-        placeholder="Ingresa tu actividad"
+        placeholder="Edit your task"
         value={text}
         disabled={status === TaskStatus.completed}
         onChange={handleOnChange}
